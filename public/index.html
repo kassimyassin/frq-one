@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FRQ · Faruq, a System One model for decisions</title>
+  <meta name="description" content="Faruq is a System One model by FRQ. Give it the situation, a question and the options. It returns the choice, with a probability for every option, in a single pass.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Faruq, a System One model for decisions">
+  <meta property="og:description" content="Give it the situation, a question and the options. It returns the choice, with a probability for every option.">
+  <meta property="og:url" content="https://frq.one/">
+  <meta name="theme-color" content="#f5f3ee" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f0f0d" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="top" id="top">
+    <div class="wrap top-row">
+      <a class="brand" href="#top" aria-label="FRQ, back to top">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+          <rect class="mark-one" x="2" y="4" width="20" height="4" rx="1"/>
+          <rect class="mark-two" x="2" y="10" width="11" height="4" rx="1"/>
+          <rect class="mark-three" x="2" y="16" width="6" height="4" rx="1"/>
+        </svg>
+        <span class="brand-name">FRQ</span>
+      </a>
+      <nav class="nav" aria-label="Sections">
+        <a href="#model">Model</a>
+        <a href="#platforms">Platforms</a>
+        <a href="#request">API</a>
+        <a href="#uses">Uses</a>
+        <a href="#results">Results</a>
+      </nav>
+      <a class="btn btn-small" href="#access">Get early access</a>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-text">
+          <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Faruq · System One model · in development</p>
+          <div class="frq" id="frq">
+            <div class="frq-letters" aria-hidden="true">
+              <p class="frq-row"><span class="frq-letter">F</span><span class="frq-word"><span class="frq-flip">a</span></span></p>
+              <p class="frq-row"><span class="frq-letter">R</span><span class="frq-word"><span class="frq-flip">u</span></span></p>
+              <p class="frq-row"><span class="frq-letter">Q</span><span class="frq-word"><span class="frq-flip"></span></span></p>
+            </div>
+            <p class="frq-caption" id="frq-caption">FRQ is Faruq without its vowels. Faruq, said fa-rook, is an Arabic name for the one who distinguishes. Its root, f-r-q, means to separate, to tell apart, to decide.</p>
+            <div class="frq-controls" role="group" aria-label="What the letters FRQ stand for">
+              <button type="button" class="frq-dot" data-meaning="0" aria-pressed="true" aria-label="Faruq" title="Faruq"></button>
+              <button type="button" class="frq-dot" data-meaning="1" aria-pressed="false" aria-label="Fast Routing &amp; Quantification" title="Fast Routing &amp; Quantification"></button>
+              <button type="button" class="frq-dot" data-meaning="2" aria-pressed="false" aria-label="Flag, Route, Quantify" title="Flag, Route, Quantify"></button>
+              <button type="button" class="frq-dot" data-meaning="3" aria-pressed="false" aria-label="Fast Ranking Queries" title="Fast Ranking Queries"></button>
+              <button type="button" class="frq-dot" data-meaning="4" aria-pressed="false" aria-label="Fast Reasoning Queries" title="Fast Reasoning Queries"></button>
+              <button type="button" class="frq-dot" data-meaning="5" aria-pressed="false" aria-label="Faruq Runtime Query" title="Faruq Runtime Query"></button>
+              <button type="button" class="frq-pause" id="frq-pause" hidden>Pause</button>
+            </div>
+          </div>
+          <h1>Decisions, not paragraphs.</h1>
+          <p class="lead">Faruq is a System One model. Give it the situation, a question and the options. It returns the choice, with a probability for every option, in a single pass.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#access">Get early access</a>
+            <a class="link-arrow" href="#results">See the numbers</a>
+          </div>
+        </div>
+
+        <div class="decision" id="demo">
+          <div class="decision-tabs" role="group" aria-label="Example decisions">
+            <button type="button" class="tab" data-example="0" aria-pressed="true">Route a message</button>
+            <button type="button" class="tab" data-example="1" aria-pressed="false">Choose the next step</button>
+            <button type="button" class="tab" data-example="2" aria-pressed="false">Check an answer</button>
+          </div>
+          <div class="decision-body">
+            <div class="field">
+              <span class="label">State</span>
+              <pre class="state" id="demo-state">message: "I was charged twice for my October invoice."</pre>
+            </div>
+            <div class="field">
+              <span class="label">Question</span>
+              <p class="question" id="demo-question">Which team should handle this?</p>
+            </div>
+            <div class="field">
+              <span class="label">Answer</span>
+              <ol class="options" id="demo-options">
+                <li class="option is-chosen"><span class="option-name">Billing</span><span class="option-pct">94%</span><span class="option-bar"><i style="width:94%"></i></span></li>
+                <li class="option"><span class="option-name">Technical support</span><span class="option-pct">3%</span><span class="option-bar"><i style="width:3%"></i></span></li>
+                <li class="option"><span class="option-name">Sales</span><span class="option-pct">2%</span><span class="option-bar"><i style="width:2%"></i></span></li>
+                <li class="option"><span class="option-name">Account and login</span><span class="option-pct">1%</span><span class="option-bar"><i style="width:1%"></i></span></li>
+              </ol>
+            </div>
+          </div>
+          <p class="decision-note">Illustration of the format. Not live output.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="model">
+      <div class="wrap section-grid">
+        <header class="section-head">
+          <p class="section-num">Model</p>
+        </header>
+        <div class="section-main">
+          <h2>Most of what software asks an AI is a choice.</h2>
+          <p class="section-lead">Which queue. Which tool. Yes or no. Safe or not. A System One model is built for that one job: it reads the question once and picks from the options it was given.</p>
+
+          <div class="pillars">
+            <article class="pillar">
+              <h3>Typed in, typed out</h3>
+              <p>You send a state, a question and the allowed options. You get back one of those options. Nothing else can come out.</p>
+            </article>
+            <article class="pillar">
+              <h3>One pass</h3>
+              <p>Faruq is a 150M-parameter encoder. It scores every option in one read. No text is generated, so there is nothing to parse.</p>
+            </article>
+            <article class="pillar">
+              <h3>A number to act on</h3>
+              <p>Every option comes back with a probability. Your code can accept the answer, check it again, or hand over to a person.</p>
+            </article>
+          </div>
+
+          <dl class="spec">
+            <div><dt>Type</dt><dd>Encoder</dd></div>
+            <div><dt>Size</dt><dd>150M parameters</dd></div>
+            <div><dt>Reads</dt><dd>Up to 8,192 tokens per request</dd></div>
+            <div><dt>Returns</dt><dd>One option, and a probability for each</dd></div>
+            <div><dt>Language</dt><dd>English. Arabic models come next.</dd></div>
+            <div><dt>Status</dt><dd>In development</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="platforms">
+      <div class="wrap section-grid">
+        <header class="section-head">
+          <p class="section-num">Platforms</p>
+        </header>
+        <div class="section-main">
+          <h2>A decision step inside the tools you already use.</h2>
+          <p class="section-lead">Faruq will come as nodes, apps and plugins that install where you already work, starting with automation platforms such as n8n, Make and Zapier. It reads what just arrived and tells the next step where to go. No code needed.</p>
+
+          <figure class="wf">
+            <div class="wf-row">
+              <div class="wf-step">
+                <span class="wf-kind">Trigger</span>
+                <strong>New support email</strong>
+                <span class="wf-text">"I was charged twice for my October invoice."</span>
+              </div>
+              <span class="wf-arrow" aria-hidden="true"></span>
+              <div class="wf-step wf-decide">
+                <span class="wf-kind">Faruq · decide</span>
+                <strong>Which team should handle this?</strong>
+                <span class="wf-text">Billing, technical support or sales</span>
+              </div>
+              <span class="wf-arrow" aria-hidden="true"></span>
+              <ul class="wf-branches">
+                <li class="is-taken"><strong>Billing</strong><span class="wf-pct">94%</span><span class="wf-next">Open a billing ticket</span></li>
+                <li><strong>Technical support</strong><span class="wf-pct">3%</span></li>
+                <li><strong>Sales</strong><span class="wf-pct">2%</span></li>
+              </ul>
+            </div>
+            <figcaption>Illustration. Nothing is released yet, and the list of platforms is not final.</figcaption>
+          </figure>
+
+          <ol class="channels">
+            <li><p class="channel-when">First</p><h3>Nodes, apps and plugins</h3><p>Installed from inside the platform you use. Pick the question, list the options, branch on the answer.</p></li>
+            <li><p class="channel-when">Always</p><h3>The API</h3><p>The same model for your own software, from the first day.</p></li>
+            <li><p class="channel-when">Later</p><h3>Companies and public institutions</h3><p>Working directly with larger teams that want Faruq inside their own systems.</p></li>
+          </ol>
+
+          <p class="pricing-note"><strong>You pay for decisions, not tokens.</strong> The plan is a price per decision, on its own or in bundles.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="request">
+      <div class="wrap section-grid">
+        <header class="section-head">
+          <p class="section-num">API</p>
+        </header>
+        <div class="section-main">
+          <h2>One request, several questions, one answer each.</h2>
+          <p class="section-lead">Behind every workflow step is the same call. Describe the situation once, then ask as many questions about it as you need. Each question carries its own options.</p>
+
+          <div class="flow">
+            <figure class="code">
+              <figcaption><span>You send</span><span class="tag">preview</span></figcaption>
+              <pre><code id="code-request"></code></pre>
+            </figure>
+            <figure class="code">
+              <figcaption><span>You get back</span><span class="tag">preview</span></figcaption>
+              <pre><code id="code-response"></code></pre>
+            </figure>
+          </div>
+          <p class="fineprint">A preview of the request shape. The API is not open yet and details may change.</p>
+
+          <ol class="steps">
+            <li><h3>State</h3><p>Whatever the decision is about: a message, a document, a conversation so far, a list of tools.</p></li>
+            <li><h3>Questions</h3><p>Each one is an instruction plus the options to choose from, or a plain yes or no.</p></li>
+            <li><h3>Answers</h3><p>For each question, the chosen option and the probability Faruq gives to every option.</p></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="uses">
+      <div class="wrap section-grid">
+        <header class="section-head">
+          <p class="section-num">Uses</p>
+        </header>
+        <div class="section-main">
+          <h2>Where a fast, narrow answer is the right one.</h2>
+          <p class="section-lead">Each use below is paired with the public benchmark that tests it, and what Faruq scores on it today.</p>
+
+          <div class="uses">
+            <article class="use" data-bench="4">
+              <h3>Route a message</h3>
+              <p>Read a customer's message and send it to the right intent, queue or team.</p>
+              <p class="use-score"></p>
+            </article>
+            <article class="use" data-bench="1">
+              <h3>Decide if a tool is needed</h3>
+              <p>For each tool an agent has, say whether this request calls for it.</p>
+              <p class="use-score"></p>
+            </article>
+            <article class="use" data-bench="62">
+              <h3>Choose the next step</h3>
+              <p>Call a tool, ask a follow-up question, answer directly, or decline.</p>
+              <p class="use-score"></p>
+            </article>
+            <article class="use" data-bench="11">
+              <h3>Check a contract</h3>
+              <p>Does the agreement support a statement, contradict it, or not mention it?</p>
+              <p class="use-score"></p>
+            </article>
+            <article class="use" data-bench="39">
+              <h3>Read sentiment about a company</h3>
+              <p>How a piece of financial news feels about each company it names.</p>
+              <p class="use-score"></p>
+            </article>
+            <article class="use" data-bench="2">
+              <h3>Find the right tool among many</h3>
+              <p>Rate a long list of candidate tools by how useful each is for a request.</p>
+              <p class="use-score"></p>
+            </article>
+          </div>
+
+          <div class="limits">
+            <h3>What it is not for</h3>
+            <p>Maths, graduate-level science, chess and long chains of reasoning. A small model that answers in one pass does not do these, and Faruq scores at or near chance on them today. Use a larger model there.</p>
+            <p class="limits-list" id="limits-list"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <div class="wrap section-grid">
+        <header class="section-head">
+          <p class="section-num">Results</p>
+        </header>
+        <div class="section-main">
+          <h2>Measured, not promised.</h2>
+          <p class="section-lead">Numbers from the current development build<span id="measured-on"></span>. Faruq is still in training, so they will change.</p>
+          <noscript><p class="fineprint">The numbers on this page are loaded with JavaScript.</p></noscript>
+
+          <div class="tiles">
+            <div class="tile">
+              <p class="tile-number" id="tile-index">–</p>
+              <p class="tile-label">Index on the public Decision Index</p>
+              <p class="tile-sub" id="tile-index-sub"></p>
+            </div>
+            <div class="tile">
+              <p class="tile-number" id="tile-unseen">–</p>
+              <p class="tile-label">Right on tasks it never trained on</p>
+              <p class="tile-sub" id="tile-unseen-sub"></p>
+            </div>
+          </div>
+
+          <div class="bench-head">
+            <h3>Skill above chance, by benchmark</h3>
+            <div class="filters" id="filters" role="group" aria-label="Show benchmarks from"></div>
+          </div>
+          <p class="fineprint">0 is guessing, 100 is perfect. <span class="trained-mark" aria-hidden="true"></span> marks a benchmark whose public training set Faruq trained on.</p>
+          <ol class="bench" id="bench"></ol>
+          <button type="button" class="btn-ghost" id="bench-more" hidden></button>
+
+          <div class="reading">
+            <h3>How to read these numbers</h3>
+            <ul id="reading-list">
+              <li>The index is our own run on a fixed sample of the public benchmarks of the Decision Index. It is not an official leaderboard entry.</li>
+              <li id="reading-trained"></li>
+              <li>The leaderboard's main score also counts private tests that only its maintainers can run. Small models usually score lower there than on the public part.</li>
+              <li>A request that is too long for Faruq is refused and counted as wrong. Nothing is cut short to make it fit.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="compare" hidden>
+      <div class="wrap section-grid">
+        <header class="section-head">
+          <p class="section-num">Compared</p>
+        </header>
+        <div class="section-main">
+          <h2>Next to Jev and other small models.</h2>
+          <p class="section-lead" id="compare-lead"></p>
+          <div class="table-scroll">
+            <table class="compare">
+              <thead>
+                <tr><th scope="col">Model</th><th scope="col">Size</th><th scope="col">Kind</th><th scope="col" class="num">Public index</th><th scope="col" class="num">Full score</th></tr>
+              </thead>
+              <tbody id="compare-rows"></tbody>
+            </table>
+          </div>
+          <p class="fineprint" id="compare-note"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="access">
+      <div class="wrap section-grid">
+        <header class="section-head">
+          <p class="section-num">Early access</p>
+        </header>
+        <div class="section-main access">
+          <div>
+            <h2>Try Faruq before it opens.</h2>
+            <p class="section-lead">Leave your email and tell us which decision you would hand to Faruq. We will write to you when there is something to try.</p>
+          </div>
+          <form class="form" id="access-form" novalidate>
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@company.com">
+            </div>
+            <fieldset class="form-row form-where">
+              <legend>Where would you use it? <span class="optional">optional</span></legend>
+              <div class="checks">
+                <label><input type="checkbox" name="where" value="n8n"><span>n8n</span></label>
+                <label><input type="checkbox" name="where" value="Make"><span>Make</span></label>
+                <label><input type="checkbox" name="where" value="Zapier"><span>Zapier</span></label>
+                <label><input type="checkbox" name="where" value="Support desk"><span>A support desk</span></label>
+                <label><input type="checkbox" name="where" value="Browser extension"><span>A browser extension</span></label>
+                <label><input type="checkbox" name="where" value="ChatGPT or Claude"><span>ChatGPT or Claude</span></label>
+                <label><input type="checkbox" name="where" value="API"><span>API</span></label>
+                <label><input type="checkbox" name="where" value="Other"><span>Somewhere else</span></label>
+              </div>
+            </fieldset>
+            <div class="form-row">
+              <label for="use">Which decision would you hand to it? <span class="optional">optional</span></label>
+              <textarea id="use" name="use" rows="3" placeholder="Which team gets this ticket, is this lead worth a call, …"></textarea>
+            </div>
+            <div class="form-row">
+              <label for="volume">About how many decisions a month? <span class="optional">optional</span></label>
+              <select id="volume" name="volume">
+                <option value="">Not sure yet</option>
+                <option>Under 1,000</option>
+                <option>1,000 to 10,000</option>
+                <option>10,000 to 100,000</option>
+                <option>More than 100,000</option>
+              </select>
+            </div>
+            <div class="form-trap" aria-hidden="true">
+              <label for="website">Leave this empty</label>
+              <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+            </div>
+            <button class="btn" type="submit">Request early access</button>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+            <p class="fineprint">We use your email only to contact you about Faruq.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-row">
+      <p><strong>FRQ</strong> · frq.one</p>
+      <p class="foot-note">© <span id="year">2026</span> FRQ. Benchmark names belong to their publishers. FRQ is not affiliated with the Decision Index or with the makers of any other model named on this page.</p>
+    </div>
+  </footer>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/results.js"></script>
+  <script src="assets/board.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
